@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天津两日游 · 行程单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1E8D6;
+    --paper-deep:#E7DAC0;
+    --ink:#20293A;
+    --brick:#A13D2C;
+    --brass:#B98A2E;
+    --line:#C9BB9C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans SC', sans-serif;
+    line-height:1.6;
+    padding-bottom:80px;
+  }
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 24px 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:260px; height:260px;
+    border:1px solid rgba(241,232,214,0.18);
+    border-radius:50%;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    right:20px; bottom:-90px;
+    width:180px; height:180px;
+    border:1px solid rgba(241,232,214,0.12);
+    border-radius:50%;
+  }
+  .eyebrow{
+    font-size:14px;
+    letter-spacing:0.08em;
+    color:var(--brass);
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Noto Serif SC', serif;
+    font-weight:900;
+    font-size:clamp(32px,6vw,56px);
+    max-width:640px;
+    position:relative;
+  }
+  .hero p{
+    margin-top:16px;
+    max-width:520px;
+    color:#D8CFBB;
+    font-size:16px;
+    position:relative;
+  }
+  .meta-row{
+    display:flex;
+    gap:28px;
+    margin-top:32px;
+    flex-wrap:wrap;
+    position:relative;
+  }
+  .meta-item .num{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--paper);}
+  .meta-item .label{font-size:13px;color:#B7AD97;margin-top:2px;}
+
+  .tabs{
+    display:flex;
+    max-width:760px;
+    margin:-28px auto 0;
+    position:relative;
+    z-index:2;
+    padding:0 24px;
+    gap:10px;
+  }
+  .tab-btn{
+    flex:1;
+    background:var(--paper);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:'Noto Serif SC', serif;
+    font-weight:600;
+    font-size:16px;
+    padding:16px 12px;
+    cursor:pointer;
+    border-radius:2px;
+    box-shadow:0 6px 14px rgba(32,41,58,0.12);
+    transition:background 0.2s, color 0.2s;
+  }
+  .tab-btn.active{
+    background:var(--brick);
+    border-color:var(--brick);
+    color:var(--paper);
+  }
+
+  main{
+    max-width:760px;
+    margin:56px auto 0;
+    padding:0 24px;
+  }
+  .day{display:none;}
+  .day.active{display:block;}
+
+  .day-heading{
+    font-family:'Noto Serif SC', serif;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .day-sub{
+    color:#6B6252;
+    font-size:14px;
+    margin-bottom:32px;
+  }
+
+  .timeline{
+    position:relative;
+    padding-left:28px;
+    border-left:2px solid var(--line);
+  }
+  .stop{
+    position:relative;
+    padding-bottom:36px;
+  }
+  .stop:last-child{padding-bottom:0;}
+  .stop::before{
+    content:"";
+    position:absolute;
+    left:-34px; top:4px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--brick);
+    border:2px solid var(--paper);
+    box-shadow:0 0 0 1px var(--brick);
+  }
+  .time{
+    font-family:'Noto Serif SC', serif;
+    font-weight:700;
+    color:var(--brick);
+    font-size:15px;
+    margin-bottom:4px;
+  }
+  .stop-name{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .stop-desc{
+    font-size:14.5px;
+    color:#4A4536;
+    max-width:560px;
+  }
+  .stop-tag{
+    display:inline-block;
+    margin-top:8px;
+    font-size:12px;
+    color:var(--brass);
+    border:1px solid var(--brass);
+    padding:2px 8px;
+    border-radius:20px;
+  }
+
+  footer{
+    max-width:760px;
+    margin:56px auto 0;
+    padding:20px 24px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:#7A705C;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="eyebrow">TRAVEL ITINERARY</div>
+  <h1>天津两日游</h1>
+  <p>从意租界的红顶洋楼,到古文化街的年画香火,再到五大道的百年洋房 —— 用两天走完这座北方港口城市最经典的路线。</p>
+  <div class="meta-row">
+    <div class="meta-item"><div class="num">2</div><div class="label">天行程</div></div>
+    <div class="meta-item"><div class="num">10+</div><div class="label">个地标</div></div>
+    <div class="meta-item"><div class="num">1900s</div><div class="label">租界建筑年代</div></div>
+  </div>
+</section>
+
+<div class="tabs">
+  <button class="tab-btn active" data-day="1">第一天 · 老城与租界</button>
+  <button class="tab-btn" data-day="2">第二天 · 五大道</button>
+</div>
+
+<main>
+  <div class="day active" id="day-1">
+    <div class="day-heading">Day 1 · 意租界 → 古文化街 → 鼓楼 → 食品街 → 天津之眼</div>
+    <div class="day-sub">这一天主要在海河北岸活动,景点集中,步行或地铁均可串联。</div>
+    <div class="timeline">
+
+      <div class="stop">
+        <div class="time">09:00</div>
+        <div class="stop-name">意大利风情区</div>
+        <div class="stop-desc">中国境内唯一的意大利租界旧址,红顶建筑、圆拱与雕塑成群,梁启超、曹禺等名人故居也在此。慢慢逛、拍照,大约两小时。</div>
+        <span class="stop-tag">建筑 · 拍照</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">11:00</div>
+        <div class="stop-name">古文化街</div>
+        <div class="stop-desc">天津最集中的老字号与手工艺品街区,杨柳青年画、泥人张彩塑、风筝等传统工艺都能找到。</div>
+        <span class="stop-tag">老字号</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">12:30</div>
+        <div class="stop-name">午餐:古文化街周边</div>
+        <div class="stop-desc">狗不理包子、煎饼果子、耳朵眼炸糕都是天津代表小吃,古文化街附近就能吃到。</div>
+        <span class="stop-tag">美食</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">14:00</div>
+        <div class="stop-name">鼓楼</div>
+        <div class="stop-desc">天津城市中心地标,名为鼓楼、实为钟楼,楼内供奉观音、天后等,二层悬有天津"钟王"。</div>
+        <span class="stop-tag">地标</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">15:30</div>
+        <div class="stop-name">南市食品街</div>
+        <div class="stop-desc">以传统小吃为主的特色购物街区,中西合璧的建筑风格,也适合再拍一组照片。</div>
+        <span class="stop-tag">美食 · 购物</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">18:00</div>
+        <div class="stop-name">天津之眼摩天轮</div>
+        <div class="stop-desc">世界上唯一建在桥上的摩天轮,红桥区海河畔,傍晚乘坐可以看到海河两岸的夜景。</div>
+        <span class="stop-tag">地标 · 夜景</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="day" id="day-2">
+    <div class="day-heading">Day 2 · 五大道 → 瓷房子 → 西开教堂 → 海河</div>
+    <div class="day-sub">这一天主要在原英租界一带,洋楼密集,适合慢慢走或租自行车。</div>
+    <div class="timeline">
+
+      <div class="stop">
+        <div class="time">09:30</div>
+        <div class="stop-name">五大道</div>
+        <div class="stop-desc">天津最大的租界建筑群,英式、法式、意式洋楼云集,张学良、顾维钧等名人旧居也在区内,适合骑行或坐观光马车游览。</div>
+        <span class="stop-tag">建筑 · 骑行</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">11:30</div>
+        <div class="stop-name">瓷房子</div>
+        <div class="stop-desc">整栋老洋楼外立面用瓷片、瓷瓶装饰而成,是五大道一带很有话题性的一站,适合拍照。</div>
+        <span class="stop-tag">拍照</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">13:00</div>
+        <div class="stop-name">午餐:五大道 / 小白楼附近</div>
+        <div class="stop-desc">周边餐厅选择多,西餐、天津菜都有,可以按当天心情挑一家坐下慢慢吃。</div>
+        <span class="stop-tag">美食</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">14:30</div>
+        <div class="stop-name">西开教堂</div>
+        <div class="stop-desc">天津三大教堂之一,罗曼式风格,绿色圆顶是老城区里很显眼的地标。</div>
+        <span class="stop-tag">建筑</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">16:00</div>
+        <div class="stop-name">海河沿岸</div>
+        <div class="stop-desc">沿河散步或乘船,能从水面角度再看一遍两岸的租界建筑群,给两天的行程收个尾。</div>
+        <span class="stop-tag">散步</span>
+      </div>
+
+      <div class="stop">
+        <div class="time">18:30</div>
+        <div class="stop-name">自由活动 / 返程</div>
+        <div class="stop-desc">留一点弹性时间,买点手信,或者按当天体力决定要不要再加一站。</div>
+        <span class="stop-tag">弹性</span>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  这是一份可以自己编辑的行程模板 —— 直接改这个 HTML 文件里的文字,就能替换成你们自己的时间、地点和备注。
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const days = document.querySelectorAll('.day');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      days.forEach(d => d.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('day-' + btn.dataset.day).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
