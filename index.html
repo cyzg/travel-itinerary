@@ -222,6 +222,7 @@
   details.day-map[open] summary::after{content:"收起 ▴";}
   .day-map-body{padding:0 14px 14px;}
   .day-map-body svg{width:100%;height:auto;display:block;margin-bottom:10px;}
+  .nav-all-row{display:flex;gap:10px;flex-wrap:wrap;}
   .nav-all-btn{
     display:inline-block;
     font-size:13px;
@@ -232,7 +233,9 @@
     background:var(--ink);
     color:var(--paper);
   }
+  .nav-all-btn.bmap{background:var(--brass);color:#20293A;}
   :root.theme-night .nav-all-btn{background:var(--brass);color:#181C27;}
+  :root.theme-night .nav-all-btn.bmap{background:var(--brick);color:#181C27;}
 
   .timeline{
     position:relative;
@@ -264,7 +267,19 @@
   .stop-body{flex:1;}
   .stop-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .stop-name{font-size:16.5px;font-weight:700;}
-  .stop-name a{text-decoration:none;border-bottom:1px dashed currentColor;}
+  .nav-chips{display:inline-flex;gap:6px;}
+  .nav-chip{
+    font-size:11px;
+    font-weight:700;
+    text-decoration:none;
+    padding:2px 10px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .nav-chip.amap{color:var(--brick);border-color:var(--brick);}
+  .nav-chip.bmap{color:var(--brass);border-color:var(--brass);}
   .stop-desc{font-size:13.8px;color:var(--ink-soft);margin-top:4px;max-width:540px;}
   .stop-tags{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;}
   .stop-tag{
@@ -464,6 +479,12 @@
   function amapAreaUrl(day){
     return 'https://uri.amap.com/search?keyword=' + encodeURIComponent(day.area) + '&city=' + encodeURIComponent('天津') + '&view=list&callnative=1&src=travel-itinerary';
   }
+  function bmapUrl(query){
+    return 'https://api.map.baidu.com/place/search?query=' + encodeURIComponent(query) + '&region=' + encodeURIComponent('天津') + '&output=html&src=' + encodeURIComponent('webapp.travel.itinerary');
+  }
+  function bmapAreaUrl(day){
+    return 'https://api.map.baidu.com/place/search?query=' + encodeURIComponent(day.area) + '&region=' + encodeURIComponent('天津') + '&output=html&src=' + encodeURIComponent('webapp.travel.itinerary');
+  }
 
   function miniMapSvg(day){
     var color = day.id === 1 ? 'var(--brick)' : 'var(--brass)';
@@ -509,7 +530,11 @@
           '<div class="stop-row">' +
           '<div class="stop-time">' + s.time + '</div>' +
           '<div class="stop-body">' +
-          '<div class="stop-name-row"><span class="stop-name"><a href="' + amapUrl(s.mapQuery) + '" target="_blank" rel="noopener">' + s.name + '</a></span></div>' +
+          '<div class="stop-name-row"><span class="stop-name">' + s.name + '</span>' +
+          '<span class="nav-chips">' +
+          '<a class="nav-chip amap" href="' + amapUrl(s.mapQuery) + '" target="_blank" rel="noopener">高德 →</a>' +
+          '<a class="nav-chip bmap" href="' + bmapUrl(s.mapQuery) + '" target="_blank" rel="noopener">百度 →</a>' +
+          '</span></div>' +
           '<div class="stop-desc">' + s.desc + '</div>' +
           '<div class="stop-tags">' + tagsHtml + '</div>' +
           '</div></div></div>';
@@ -520,8 +545,10 @@
         '<div class="day-date">' + day.dateLabel + '</div>' +
         '<details class="day-map"><summary>展开当日路线地图</summary>' +
         '<div class="day-map-body">' + miniMapSvg(day) +
-        '<a class="nav-all-btn" href="' + amapAreaUrl(day) + '" target="_blank" rel="noopener">在高德地图中查看今日区域</a>' +
-        '</div></details>' +
+        '<div class="nav-all-row">' +
+        '<a class="nav-all-btn amap" href="' + amapAreaUrl(day) + '" target="_blank" rel="noopener">高德地图 · 今日区域</a>' +
+        '<a class="nav-all-btn bmap" href="' + bmapAreaUrl(day) + '" target="_blank" rel="noopener">百度地图 · 今日区域</a>' +
+        '</div></div></details>' +
         '<div class="timeline">' + stopsHtml + '</div>' +
         '</div>';
     }).join('');
