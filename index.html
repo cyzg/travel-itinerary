@@ -2,321 +2,605 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>天津两日游 · 行程单</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>天津两日游 · 3人行</title>
 <style>
   :root{
     --paper:#F1E8D6;
     --paper-deep:#E7DAC0;
+    --card:#FBF6EA;
     --ink:#20293A;
+    --ink-soft:#5B5546;
     --brick:#A13D2C;
     --brass:#B98A2E;
     --line:#C9BB9C;
+    --pending-bg:#EFE6D0;
+    --pending-border:#C9BB9C;
+  }
+  :root.theme-night{
+    --paper:#181C27;
+    --paper-deep:#20263380;
+    --card:#232A3A;
+    --ink:#EDE6D6;
+    --ink-soft:#B8AE97;
+    --brick:#E2694F;
+    --brass:#E3B65B;
+    --line:#3B4256;
+    --pending-bg:#2A2F40;
+    --pending-border:#454C63;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  html{background:var(--paper);}
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:'Noto Sans SC', sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
     line-height:1.6;
-    padding-bottom:80px;
+    padding-bottom:60px;
+    transition:background .4s ease,color .4s ease;
   }
-  .hero{
-    background:var(--ink);
-    color:var(--paper);
-    padding:64px 24px 48px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero::after{
-    content:"";
-    position:absolute;
-    right:-60px; top:-60px;
-    width:260px; height:260px;
-    border:1px solid rgba(241,232,214,0.18);
-    border-radius:50%;
-  }
-  .hero::before{
-    content:"";
-    position:absolute;
-    right:20px; bottom:-90px;
-    width:180px; height:180px;
-    border:1px solid rgba(241,232,214,0.12);
-    border-radius:50%;
-  }
-  .eyebrow{
-    font-size:14px;
-    letter-spacing:0.08em;
-    color:var(--brass);
-    margin-bottom:14px;
-  }
-  h1{
-    font-family:'Noto Serif SC', serif;
-    font-weight:900;
-    font-size:clamp(32px,6vw,56px);
-    max-width:640px;
-    position:relative;
-  }
-  .hero p{
-    margin-top:16px;
-    max-width:520px;
-    color:#D8CFBB;
-    font-size:16px;
-    position:relative;
-  }
-  .meta-row{
-    display:flex;
-    gap:28px;
-    margin-top:32px;
-    flex-wrap:wrap;
-    position:relative;
-  }
-  .meta-item .num{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--paper);}
-  .meta-item .label{font-size:13px;color:#B7AD97;margin-top:2px;}
+  a{color:inherit;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px;}
 
-  .tabs{
-    display:flex;
-    max-width:760px;
-    margin:-28px auto 0;
-    position:relative;
-    z-index:2;
-    padding:0 24px;
-    gap:10px;
+  /* ---- top meta ---- */
+  .topbar{
+    padding:28px 20px 8px;
+    text-align:center;
   }
-  .tab-btn{
-    flex:1;
-    background:var(--paper);
-    border:1px solid var(--line);
-    color:var(--ink);
-    font-family:'Noto Serif SC', serif;
-    font-weight:600;
-    font-size:16px;
-    padding:16px 12px;
-    cursor:pointer;
-    border-radius:2px;
-    box-shadow:0 6px 14px rgba(32,41,58,0.12);
-    transition:background 0.2s, color 0.2s;
-  }
-  .tab-btn.active{
-    background:var(--brick);
-    border-color:var(--brick);
-    color:var(--paper);
-  }
-
-  main{
-    max-width:760px;
-    margin:56px auto 0;
-    padding:0 24px;
-  }
-  .day{display:none;}
-  .day.active{display:block;}
-
-  .day-heading{
-    font-family:'Noto Serif SC', serif;
+  .topbar h1{
     font-size:22px;
-    font-weight:700;
+    font-weight:800;
+    letter-spacing:.02em;
+  }
+  .topbar .meta{
+    margin-top:6px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .topbar .tz-note{
+    margin-top:4px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    opacity:.8;
+  }
+
+  /* ---- 此刻关注 ---- */
+  .focus-card{
+    margin:14px auto 0;
+    max-width:720px;
+    background:linear-gradient(135deg,var(--brick),#7a2c1f);
+    color:#F5EEDD;
+    border-radius:18px;
+    padding:26px 24px 22px;
+    box-shadow:0 14px 30px rgba(32,20,10,0.25);
+  }
+  :root.theme-night .focus-card{
+    background:linear-gradient(135deg,#5b2419,#331209);
+  }
+  .focus-label{
+    font-size:12.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    opacity:.85;
     margin-bottom:6px;
   }
-  .day-sub{
-    color:#6B6252;
-    font-size:14px;
-    margin-bottom:32px;
+  .focus-name{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:2px;
   }
+  .focus-when{
+    font-size:13px;
+    opacity:.85;
+    margin-bottom:18px;
+  }
+  .countdown{
+    display:flex;
+    gap:14px;
+  }
+  .cd-unit{
+    flex:1;
+    background:rgba(255,255,255,0.12);
+    border-radius:12px;
+    padding:10px 4px;
+    text-align:center;
+  }
+  .cd-num{
+    font-size:28px;
+    font-weight:800;
+    font-variant-numeric:tabular-nums;
+  }
+  .cd-unit-label{
+    font-size:11px;
+    opacity:.8;
+    margin-top:2px;
+  }
+  .focus-done{
+    font-size:18px;
+    font-weight:700;
+    padding:10px 0 4px;
+  }
+
+  /* ---- section shell ---- */
+  section{
+    max-width:760px;
+    margin:44px auto 0;
+    padding:0 20px;
+  }
+  .section-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .section-sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+  }
+
+  /* ---- overview map ---- */
+  .map-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:12px 8px 6px;
+  }
+  .map-card svg{width:100%;height:auto;display:block;}
+  .map-legend{
+    display:flex;
+    gap:18px;
+    padding:10px 14px 14px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    flex-wrap:wrap;
+  }
+  .map-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  /* ---- bookings ---- */
+  .booking-list{display:flex;flex-direction:column;gap:10px;}
+  .booking{
+    border-radius:14px;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    background:var(--card);
+  }
+  .booking.pending{
+    background:var(--pending-bg);
+    border:1px dashed var(--pending-border);
+  }
+  .booking-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:8px;
+  }
+  .booking-type{font-size:13px;color:var(--ink-soft);}
+  .booking-status{
+    font-size:11.5px;
+    padding:2px 9px;
+    border-radius:20px;
+    font-weight:600;
+  }
+  .booking.pending .booking-status{background:transparent;color:var(--brass);border:1px solid var(--brass);}
+  .booking:not(.pending) .booking-status{background:var(--brick);color:#F5EEDD;}
+  .booking-title{font-size:16.5px;font-weight:700;margin-top:4px;}
+  .booking-detail{font-size:13.5px;color:var(--ink-soft);margin-top:3px;}
+
+  /* ---- day itinerary ---- */
+  .day-block{margin-bottom:40px;}
+  .day-block:last-child{margin-bottom:0;}
+  .day-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:4px;
+  }
+  .day-heading h3{font-size:19px;font-weight:800;}
+  .day-date{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+
+  details.day-map{
+    margin-bottom:18px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--card);
+    overflow:hidden;
+  }
+  details.day-map summary{
+    cursor:pointer;
+    list-style:none;
+    padding:12px 16px;
+    font-size:13.5px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  details.day-map summary::-webkit-details-marker{display:none;}
+  details.day-map summary::after{content:"展开 ▾";color:var(--ink-soft);font-weight:500;font-size:12px;}
+  details.day-map[open] summary::after{content:"收起 ▴";}
+  .day-map-body{padding:0 14px 14px;}
+  .day-map-body svg{width:100%;height:auto;display:block;margin-bottom:10px;}
+  .nav-all-btn{
+    display:inline-block;
+    font-size:13px;
+    font-weight:700;
+    padding:9px 16px;
+    border-radius:20px;
+    text-decoration:none;
+    background:var(--ink);
+    color:var(--paper);
+  }
+  :root.theme-night .nav-all-btn{background:var(--brass);color:#181C27;}
 
   .timeline{
     position:relative;
-    padding-left:28px;
+    padding-left:26px;
     border-left:2px solid var(--line);
   }
-  .stop{
-    position:relative;
-    padding-bottom:36px;
-  }
+  .stop{position:relative;padding-bottom:28px;}
   .stop:last-child{padding-bottom:0;}
   .stop::before{
     content:"";
     position:absolute;
-    left:-34px; top:4px;
-    width:11px; height:11px;
+    left:-32px;top:4px;
+    width:11px;height:11px;
     border-radius:50%;
     background:var(--brick);
     border:2px solid var(--paper);
     box-shadow:0 0 0 1px var(--brick);
   }
-  .time{
-    font-family:'Noto Serif SC', serif;
-    font-weight:700;
+  .stop.day2::before{background:var(--brass);box-shadow:0 0 0 1px var(--brass);}
+  .stop-row{display:flex;gap:14px;}
+  .stop-time{
+    flex:0 0 52px;
+    font-weight:800;
+    font-size:14px;
     color:var(--brick);
-    font-size:15px;
-    margin-bottom:4px;
+    padding-top:1px;
   }
-  .stop-name{
-    font-size:18px;
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .stop-desc{
-    font-size:14.5px;
-    color:#4A4536;
-    max-width:560px;
-  }
+  .stop.day2 .stop-time{color:var(--brass);}
+  .stop-body{flex:1;}
+  .stop-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .stop-name{font-size:16.5px;font-weight:700;}
+  .stop-name a{text-decoration:none;border-bottom:1px dashed currentColor;}
+  .stop-desc{font-size:13.8px;color:var(--ink-soft);margin-top:4px;max-width:540px;}
+  .stop-tags{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;}
   .stop-tag{
-    display:inline-block;
-    margin-top:8px;
-    font-size:12px;
-    color:var(--brass);
-    border:1px solid var(--brass);
-    padding:2px 8px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    padding:2px 9px;
     border-radius:20px;
+  }
+  .stop-tag.book{color:var(--brick);border-color:var(--brick);font-weight:600;}
+  :root.theme-night .stop-tag.book{color:var(--brick);border-color:var(--brick);}
+
+  /* ---- todo ---- */
+  .todo-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .todo-list li{
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    display:flex;
+    gap:10px;
+  }
+  .todo-list li::before{content:"·";font-weight:900;color:var(--brass);}
+
+  /* ---- tips ---- */
+  .tips-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .tips-list li{
+    font-size:14px;
+    color:var(--ink-soft);
+    padding-left:20px;
+    position:relative;
+  }
+  .tips-list li::before{
+    content:"※";
+    position:absolute;left:0;top:0;
+    color:var(--brass);
   }
 
   footer{
     max-width:760px;
-    margin:56px auto 0;
-    padding:20px 24px;
-    border-top:1px solid var(--line);
-    font-size:13px;
-    color:#7A705C;
+    margin:50px auto 0;
+    padding:18px 20px 0;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
   }
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="eyebrow">TRAVEL ITINERARY</div>
+<div class="topbar">
   <h1>天津两日游</h1>
-  <p>从意租界的红顶洋楼,到古文化街的年画香火,再到五大道的百年洋房 —— 用两天走完这座北方港口城市最经典的路线。</p>
-  <div class="meta-row">
-    <div class="meta-item"><div class="num">2</div><div class="label">天行程</div></div>
-    <div class="meta-item"><div class="num">10+</div><div class="label">个地标</div></div>
-    <div class="meta-item"><div class="num">1900s</div><div class="label">租界建筑年代</div></div>
+  <div class="meta">3人 · 2026年9月12日(周六)– 9月13日(周日)</div>
+  <div class="tz-note">页面所有时间均为天津当地时间(UTC+8)</div>
+</div>
+
+<div id="focusCard" class="focus-card">
+  <div class="focus-label">此刻关注</div>
+  <div class="focus-name" id="focusName">—</div>
+  <div class="focus-when" id="focusWhen">—</div>
+  <div class="countdown" id="countdown">
+    <div class="cd-unit"><div class="cd-num" id="cdDays">00</div><div class="cd-unit-label">天</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cdHours">00</div><div class="cd-unit-label">时</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cdMinutes">00</div><div class="cd-unit-label">分</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cdSeconds">00</div><div class="cd-unit-label">秒</div></div>
+  </div>
+</div>
+
+<section id="overviewMap">
+  <div class="section-title">行程总览</div>
+  <div class="section-sub">Day 1(赤红)在老城与租界,Day 2(赭金)在五大道与海河</div>
+  <div class="map-card">
+    <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/>
+        </filter>
+      </defs>
+
+      <path filter="url(#rough)" d="M50,120 C120,60 150,150 190,90 C230,40 270,150 300,110 C340,60 380,150 420,90 C460,40 500,140 530,110 C560,80 610,130 650,90"
+        fill="none" stroke="var(--brick)" stroke-width="3.2" stroke-linecap="round"/>
+
+      <path filter="url(#rough)" d="M50,290 C110,340 150,250 190,280 C240,320 270,240 320,280 C370,320 400,250 450,280 C500,320 540,250 590,280 C610,290 630,270 650,280"
+        fill="none" stroke="var(--brass)" stroke-width="3.2" stroke-linecap="round"/>
+
+      <g font-size="12.5" font-weight="700" fill="var(--ink)">
+        <g transform="translate(50,120)"><circle r="9" fill="var(--brick)"/><text x="0" y="4" text-anchor="middle" fill="#fff" font-size="10">🚄</text><text y="-16" text-anchor="middle">天津站</text></g>
+        <g transform="translate(190,90)"><circle r="9" fill="var(--brick)"/><text x="0" y="-16" text-anchor="middle">意式风情区</text></g>
+        <g transform="translate(300,110)"><circle r="9" fill="var(--brick)"/><text x="0" y="-16" text-anchor="middle">古文化街</text></g>
+        <g transform="translate(420,90)"><circle r="9" fill="var(--brick)"/><text x="0" y="-16" text-anchor="middle">鼓楼</text></g>
+        <g transform="translate(530,110)"><circle r="9" fill="var(--brick)"/><text x="0" y="-16" text-anchor="middle">食品街</text></g>
+        <g transform="translate(650,90)"><circle r="9" fill="var(--brick)"/><text x="0" y="-16" text-anchor="middle">天津之眼</text></g>
+      </g>
+
+      <text x="350" y="200" text-anchor="middle" font-size="13" fill="var(--ink-soft)">🌙 周六夜宿酒店(区域待定:天津站 / 解放北路一带)</text>
+
+      <g font-size="12.5" font-weight="700" fill="var(--ink)">
+        <g transform="translate(50,290)"><circle r="9" fill="var(--brass)"/><text x="0" y="22" text-anchor="middle">🛏 酒店</text></g>
+        <g transform="translate(190,280)"><circle r="9" fill="var(--brass)"/><text x="0" y="22" text-anchor="middle">五大道</text></g>
+        <g transform="translate(320,280)"><circle r="9" fill="var(--brass)"/><text x="0" y="22" text-anchor="middle">瓷房子</text></g>
+        <g transform="translate(450,280)"><circle r="9" fill="var(--brass)"/><text x="0" y="22" text-anchor="middle">西开教堂</text></g>
+        <g transform="translate(590,280)"><circle r="9" fill="var(--brass)"/><text x="0" y="22" text-anchor="middle">海河</text></g>
+        <g transform="translate(650,280)"><circle r="9" fill="var(--brass)"/><text x="0" y="4" text-anchor="middle" fill="#fff" font-size="10">🚄</text><text y="22" text-anchor="middle">天津站</text></g>
+      </g>
+    </svg>
+    <div class="map-legend">
+      <span><i class="dot" style="background:var(--brick)"></i>Day 1 · 老城与租界</span>
+      <span><i class="dot" style="background:var(--brass)"></i>Day 2 · 五大道与海河</span>
+    </div>
   </div>
 </section>
 
-<div class="tabs">
-  <button class="tab-btn active" data-day="1">第一天 · 老城与租界</button>
-  <button class="tab-btn" data-day="2">第二天 · 五大道</button>
-</div>
+<section id="bookings">
+  <div class="section-title">已确认 / 待确认</div>
+  <div class="section-sub">地址与联系方式以订单为准,截图发我后我来补全</div>
+  <div class="booking-list" id="bookingList"></div>
+</section>
 
-<main>
-  <div class="day active" id="day-1">
-    <div class="day-heading">Day 1 · 意租界 → 古文化街 → 鼓楼 → 食品街 → 天津之眼</div>
-    <div class="day-sub">这一天主要在海河北岸活动,景点集中,步行或地铁均可串联。</div>
-    <div class="timeline">
+<section id="itinerary">
+  <div class="section-title">逐日行程</div>
+  <div class="section-sub">标 <span class="stop-tag book" style="display:inline-block;vertical-align:1px;">需提前订票</span> 的建议线上先买</div>
+  <div id="dayBlocks"></div>
+</section>
 
-      <div class="stop">
-        <div class="time">09:00</div>
-        <div class="stop-name">意大利风情区</div>
-        <div class="stop-desc">中国境内唯一的意大利租界旧址,红顶建筑、圆拱与雕塑成群,梁启超、曹禺等名人故居也在此。慢慢逛、拍照,大约两小时。</div>
-        <span class="stop-tag">建筑 · 拍照</span>
-      </div>
+<section id="todo">
+  <div class="section-title">待办清单</div>
+  <div class="section-sub">办完一项告诉我,我来更新页面(这份清单不支持勾选,多人打开看到的状态会不一致)</div>
+  <ul class="todo-list" id="todoList"></ul>
+</section>
 
-      <div class="stop">
-        <div class="time">11:00</div>
-        <div class="stop-name">古文化街</div>
-        <div class="stop-desc">天津最集中的老字号与手工艺品街区,杨柳青年画、泥人张彩塑、风筝等传统工艺都能找到。</div>
-        <span class="stop-tag">老字号</span>
-      </div>
+<section id="tips">
+  <div class="section-title">实用贴士</div>
+  <ul class="tips-list" id="tipsList"></ul>
+</section>
 
-      <div class="stop">
-        <div class="time">12:30</div>
-        <div class="stop-name">午餐:古文化街周边</div>
-        <div class="stop-desc">狗不理包子、煎饼果子、耳朵眼炸糕都是天津代表小吃,古文化街附近就能吃到。</div>
-        <span class="stop-tag">美食</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">14:00</div>
-        <div class="stop-name">鼓楼</div>
-        <div class="stop-desc">天津城市中心地标,名为鼓楼、实为钟楼,楼内供奉观音、天后等,二层悬有天津"钟王"。</div>
-        <span class="stop-tag">地标</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">15:30</div>
-        <div class="stop-name">南市食品街</div>
-        <div class="stop-desc">以传统小吃为主的特色购物街区,中西合璧的建筑风格,也适合再拍一组照片。</div>
-        <span class="stop-tag">美食 · 购物</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">18:00</div>
-        <div class="stop-name">天津之眼摩天轮</div>
-        <div class="stop-desc">世界上唯一建在桥上的摩天轮,红桥区海河畔,傍晚乘坐可以看到海河两岸的夜景。</div>
-        <span class="stop-tag">地标 · 夜景</span>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="day" id="day-2">
-    <div class="day-heading">Day 2 · 五大道 → 瓷房子 → 西开教堂 → 海河</div>
-    <div class="day-sub">这一天主要在原英租界一带,洋楼密集,适合慢慢走或租自行车。</div>
-    <div class="timeline">
-
-      <div class="stop">
-        <div class="time">09:30</div>
-        <div class="stop-name">五大道</div>
-        <div class="stop-desc">天津最大的租界建筑群,英式、法式、意式洋楼云集,张学良、顾维钧等名人旧居也在区内,适合骑行或坐观光马车游览。</div>
-        <span class="stop-tag">建筑 · 骑行</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">11:30</div>
-        <div class="stop-name">瓷房子</div>
-        <div class="stop-desc">整栋老洋楼外立面用瓷片、瓷瓶装饰而成,是五大道一带很有话题性的一站,适合拍照。</div>
-        <span class="stop-tag">拍照</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">13:00</div>
-        <div class="stop-name">午餐:五大道 / 小白楼附近</div>
-        <div class="stop-desc">周边餐厅选择多,西餐、天津菜都有,可以按当天心情挑一家坐下慢慢吃。</div>
-        <span class="stop-tag">美食</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">14:30</div>
-        <div class="stop-name">西开教堂</div>
-        <div class="stop-desc">天津三大教堂之一,罗曼式风格,绿色圆顶是老城区里很显眼的地标。</div>
-        <span class="stop-tag">建筑</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">16:00</div>
-        <div class="stop-name">海河沿岸</div>
-        <div class="stop-desc">沿河散步或乘船,能从水面角度再看一遍两岸的租界建筑群,给两天的行程收个尾。</div>
-        <span class="stop-tag">散步</span>
-      </div>
-
-      <div class="stop">
-        <div class="time">18:30</div>
-        <div class="stop-name">自由活动 / 返程</div>
-        <div class="stop-desc">留一点弹性时间,买点手信,或者按当天体力决定要不要再加一站。</div>
-        <span class="stop-tag">弹性</span>
-      </div>
-
-    </div>
-  </div>
-</main>
-
-<footer>
-  这是一份可以自己编辑的行程模板 —— 直接改这个 HTML 文件里的文字,就能替换成你们自己的时间、地点和备注。
-</footer>
+<footer>天津两日游 · 3人行</footer>
 
 <script>
-  const buttons = document.querySelectorAll('.tab-btn');
-  const days = document.querySelectorAll('.day');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      days.forEach(d => d.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('day-' + btn.dataset.day).classList.add('active');
+(function(){
+
+  var days = [
+    {
+      id:1, dateLabel:'9月12日 · 周六', title:'Day 1 · 老城与租界', cls:'day1',
+      stops:[
+        {time:'09:59', name:'抵达天津站', desc:'高铁 C2213,亦庄 09:30 出发,09:59 到站,历时29分。行李可先寄存站内。', tags:['到达'], mapQuery:'天津站', iso:'2026-09-12T09:59:00+08:00'},
+        {time:'10:30', name:'意大利风情区', desc:'中国境内唯一的意大利租界旧址,红顶建筑、圆拱与雕塑成群,梁启超、曹禺等名人故居也在此。慢慢逛、拍照,大约1.5小时。', tags:['建筑','拍照'], mapQuery:'天津意式风情区', iso:'2026-09-12T10:30:00+08:00'},
+        {time:'12:00', name:'古文化街', desc:'天津最集中的老字号与手工艺品街区,杨柳青年画、泥人张彩塑、风筝等传统工艺都能找到。', tags:['老字号'], mapQuery:'天津古文化街', iso:'2026-09-12T12:00:00+08:00'},
+        {time:'13:00', name:'午餐 · 古文化街周边', desc:'狗不理包子、煎饼果子、耳朵眼炸糕都是天津代表小吃,古文化街附近就能吃到。', tags:['美食'], mapQuery:'天津古文化街', iso:'2026-09-12T13:00:00+08:00'},
+        {time:'14:30', name:'鼓楼', desc:'天津城市中心地标,名为鼓楼、实为钟楼,楼内供奉观音、天后等,二层悬有天津"钟王"。', tags:['地标'], mapQuery:'天津鼓楼', iso:'2026-09-12T14:30:00+08:00'},
+        {time:'16:00', name:'南市食品街', desc:'以传统小吃为主的特色购物街区,中西合璧的建筑风格,也适合再拍一组照片。', tags:['美食','购物'], mapQuery:'天津南市食品街', iso:'2026-09-12T16:00:00+08:00'},
+        {time:'18:00', name:'天津之眼摩天轮', desc:'世界上唯一建在桥上的摩天轮,红桥区海河畔,傍晚乘坐可以看到海河两岸的夜景。周末排队较久,建议提前在线买票。', tags:['地标','夜景','需提前订票'], mapQuery:'天津之眼摩天轮', iso:'2026-09-12T18:00:00+08:00'}
+      ]
+    },
+    {
+      id:2, dateLabel:'9月13日 · 周日', title:'Day 2 · 五大道与海河', cls:'day2',
+      stops:[
+        {time:'09:30', name:'五大道', desc:'天津最大的租界建筑群,英式、法式、意式洋楼云集,张学良、顾维钧等名人旧居也在区内,适合骑行或坐观光马车游览。', tags:['建筑','骑行'], mapQuery:'天津五大道', iso:'2026-09-13T09:30:00+08:00'},
+        {time:'11:30', name:'瓷房子', desc:'整栋老洋楼外立面用瓷片、瓷瓶装饰而成,是五大道一带很有话题性的一站。周末排队较久,建议提前在线买票。', tags:['拍照','需提前订票'], mapQuery:'天津瓷房子', iso:'2026-09-13T11:30:00+08:00'},
+        {time:'13:00', name:'午餐 · 小白楼周边', desc:'周边餐厅选择多,西餐、天津菜都有,可以按当天心情挑一家坐下慢慢吃。', tags:['美食'], mapQuery:'天津小白楼', iso:'2026-09-13T13:00:00+08:00'},
+        {time:'14:30', name:'西开教堂', desc:'天津三大教堂之一,罗曼式风格,绿色圆顶是老城区里很显眼的地标。', tags:['建筑'], mapQuery:'天津西开教堂', iso:'2026-09-13T14:30:00+08:00'},
+        {time:'16:00', name:'海河沿岸', desc:'沿河散步,能从水面角度再看一遍两岸的租界建筑群,给两天的行程收个尾。', tags:['散步'], mapQuery:'天津海河', iso:'2026-09-13T16:00:00+08:00'},
+        {time:'17:30', name:'返回天津站', desc:'预留时间取行李、赶返程车次。返程车次尚未确认,买好后告诉我补上。', tags:['返程'], mapQuery:'天津站', iso:'2026-09-13T17:30:00+08:00'}
+      ]
+    }
+  ];
+
+  var bookings = [
+    {type:'🚄 高铁 · 去程', status:'confirmed', title:'C2213', detail:'9月12日(周六)09:30 亦庄 → 09:59 天津,历时29分,二等座'},
+    {type:'🚄 高铁 · 返程', status:'pending', title:'待确认', detail:'尚未购票'},
+    {type:'🏨 酒店', status:'pending', title:'待确认', detail:'建议区域:天津站 / 解放北路一带,三人家庭房'},
+    {type:'🎡 天津之眼门票', status:'pending', title:'待确认', detail:'建议提前在线购票'},
+    {type:'🏺 瓷房子门票', status:'pending', title:'待确认', detail:'建议提前在线购票'}
+  ];
+
+  var todos = [
+    '订酒店 —— 三人家庭房,推荐区域:天津站 / 解放北路一带',
+    '买返程高铁票',
+    '买天津之眼门票(建议线上)',
+    '买瓷房子门票(建议线上)',
+    '订好 / 买好后告诉我,我来更新页面'
+  ];
+
+  var tips = [
+    '9月天津早晚微凉、白天舒适,建议穿好走的鞋,行程以步行 + 地铁 + 打车为主,不需要租车。',
+    '支付以手机支付为主,建议备一点现金以防万一。',
+    '天津之眼、瓷房子建议提前在线购票,避免现场排队,尤其是周末。',
+    '天津之眼最佳观赏时间是日落前后,可以留意一下当天日落时间再决定要不要往后调。',
+    '退房后可以把行李寄存在酒店或天津站的寄存柜,轻装完成 Day2 行程。',
+    '古文化街、南市食品街的老字号店铺高峰期容易排队,可以错峰前往。'
+  ];
+
+  function mapsUrl(query){
+    return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(query + ', 天津') + '&travelmode=transit';
+  }
+  function mapsMultiUrl(stops){
+    var pts = stops.map(function(s){ return encodeURIComponent(s.mapQuery + ', 天津'); });
+    var origin = pts[0], destination = pts[pts.length-1], mids = pts.slice(1,-1);
+    var url = 'https://www.google.com/maps/dir/?api=1&origin=' + origin + '&destination=' + destination + '&travelmode=transit';
+    if (mids.length) url += '&waypoints=' + mids.join('|');
+    return url;
+  }
+
+  function miniMapSvg(day){
+    var color = day.id === 1 ? 'var(--brick)' : 'var(--brass)';
+    var n = day.stops.length;
+    var pts = day.stops.map(function(s, i){
+      var x = 40 + i * ((620) / (n - 1));
+      var y = (i % 2 === 0) ? 60 : 110;
+      return {x:x, y:y, name:s.name};
     });
-  });
+    var d = 'M' + pts[0].x + ',' + pts[0].y;
+    for (var i=1;i<pts.length;i++){ d += ' Q' + (pts[i-1].x+30) + ',' + (pts[i-1].y-20) + ' ' + pts[i].x + ',' + pts[i].y; }
+    var circles = pts.map(function(p,i){
+      return '<g transform="translate(' + p.x + ',' + p.y + ')">' +
+        '<circle r="8" fill="' + color + '"/>' +
+        '<text y="-14" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">' + p.name + '</text>' +
+        '</g>';
+    }).join('');
+    return '<svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round" filter="url(#rough)"/>' +
+      circles + '</svg>';
+  }
+
+  function renderBookings(){
+    var el = document.getElementById('bookingList');
+    el.innerHTML = bookings.map(function(b){
+      return '<div class="booking ' + (b.status === 'pending' ? 'pending' : '') + '">' +
+        '<div class="booking-top"><span class="booking-type">' + b.type + '</span>' +
+        '<span class="booking-status">' + (b.status === 'pending' ? '待确认' : '已确认') + '</span></div>' +
+        '<div class="booking-title">' + b.title + '</div>' +
+        '<div class="booking-detail">' + b.detail + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderDays(){
+    var el = document.getElementById('dayBlocks');
+    el.innerHTML = days.map(function(day){
+      var stopsHtml = day.stops.map(function(s){
+        var tagsHtml = s.tags.map(function(t){
+          return '<span class="stop-tag' + (t === '需提前订票' ? ' book' : '') + '">' + t + '</span>';
+        }).join('');
+        return '<div class="stop ' + (day.id === 2 ? 'day2' : '') + '">' +
+          '<div class="stop-row">' +
+          '<div class="stop-time">' + s.time + '</div>' +
+          '<div class="stop-body">' +
+          '<div class="stop-name-row"><span class="stop-name"><a href="' + mapsUrl(s.mapQuery) + '" target="_blank" rel="noopener">' + s.name + '</a></span></div>' +
+          '<div class="stop-desc">' + s.desc + '</div>' +
+          '<div class="stop-tags">' + tagsHtml + '</div>' +
+          '</div></div></div>';
+      }).join('');
+
+      return '<div class="day-block">' +
+        '<div class="day-heading"><h3>' + day.title + '</h3></div>' +
+        '<div class="day-date">' + day.dateLabel + '</div>' +
+        '<details class="day-map"><summary>展开当日路线地图</summary>' +
+        '<div class="day-map-body">' + miniMapSvg(day) +
+        '<a class="nav-all-btn" href="' + mapsMultiUrl(day.stops) + '" target="_blank" rel="noopener">一键打开全天多点导航</a>' +
+        '</div></details>' +
+        '<div class="timeline">' + stopsHtml + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderTodo(){
+    document.getElementById('todoList').innerHTML = todos.map(function(t){ return '<li>' + t + '</li>'; }).join('');
+  }
+  function renderTips(){
+    document.getElementById('tipsList').innerHTML = tips.map(function(t){ return '<li>' + t + '</li>'; }).join('');
+  }
+
+  function allStopsFlat(){
+    var out = [];
+    days.forEach(function(day){
+      day.stops.forEach(function(s){ out.push({name:s.name, iso:s.iso, dayTitle:day.title}); });
+    });
+    return out;
+  }
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function tzFormat(iso){
+    var d = new Date(iso);
+    var fmt = new Intl.DateTimeFormat('zh-CN', {timeZone:'Asia/Shanghai', month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:false});
+    return fmt.format(d) + '(天津时间)';
+  }
+
+  var flat = allStopsFlat();
+
+  function updateCountdown(){
+    var now = new Date();
+    var next = null;
+    for (var i=0;i<flat.length;i++){
+      if (new Date(flat[i].iso) > now){ next = flat[i]; break; }
+    }
+    var focusCard = document.getElementById('focusCard');
+    if (!next){
+      document.getElementById('focusName').textContent = '行程已结束';
+      document.getElementById('focusWhen').textContent = '祝旅途愉快 🎉';
+      document.getElementById('countdown').style.display = 'none';
+      return;
+    }
+    document.getElementById('focusName').textContent = next.name;
+    document.getElementById('focusWhen').textContent = next.dayTitle + ' · ' + tzFormat(next.iso);
+    var diff = new Date(next.iso) - now;
+    var s = Math.max(0, Math.floor(diff / 1000));
+    var d = Math.floor(s / 86400); s -= d * 86400;
+    var h = Math.floor(s / 3600); s -= h * 3600;
+    var m = Math.floor(s / 60); s -= m * 60;
+    document.getElementById('cdDays').textContent = pad(d);
+    document.getElementById('cdHours').textContent = pad(h);
+    document.getElementById('cdMinutes').textContent = pad(m);
+    document.getElementById('cdSeconds').textContent = pad(s);
+  }
+
+  function isDaytimeInTianjin(){
+    var hourStr = new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Shanghai', hour:'numeric', hour12:false}).format(new Date());
+    var hour = parseInt(hourStr, 10);
+    return hour >= 6 && hour < 18;
+  }
+  function applyTheme(){
+    document.documentElement.classList.toggle('theme-night', !isDaytimeInTianjin());
+  }
+
+  renderBookings();
+  renderDays();
+  renderTodo();
+  renderTips();
+  applyTheme();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+  setInterval(applyTheme, 60000);
+
+})();
 </script>
 
 </body>
