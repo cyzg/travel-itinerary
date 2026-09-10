@@ -451,7 +451,7 @@
   var bookings = [
     {type:'🚄 高铁 · 去程', status:'confirmed', title:'C2213', detail:'9月12日(周六)09:30 亦庄 → 09:59 天津,历时29分,二等座'},
     {type:'🚄 高铁 · 返程', status:'pending', title:'待确认', detail:'尚未购票'},
-    {type:'🏨 酒店', status:'confirmed', title:'桔子酒店(天津站意式风区店)', detail:'南开区兴安路7号 · 9/12 14:00后入住,9/13 12:00前离店 · 家庭房(1单床+1双床,35㎡)· 已致电酒店确认可入住3人'},
+    {type:'🏨 酒店', status:'confirmed', title:'桔子酒店(天津站意式风区店)', detail:'南开区兴安路7号 · 9/12 14:00后入住,9/13 12:00前离店 · 家庭房(1单床+1双床,35㎡)· 已致电酒店确认可入住3人', mapQuery:'桔子酒店(天津站意式风区店)'},
     {type:'🎡 天津之眼门票', status:'pending', title:'待确认', detail:'建议提前在线购票'},
     {type:'🏺 瓷房子门票', status:'pending', title:'待确认', detail:'建议提前在线购票'}
   ];
@@ -509,11 +509,18 @@
   function renderBookings(){
     var el = document.getElementById('bookingList');
     el.innerHTML = bookings.map(function(b){
+      var navHtml = b.mapQuery ? (
+        '<div class="stop-tags"><span class="nav-chips">' +
+        '<a class="nav-chip amap" href="' + amapUrl(b.mapQuery) + '" target="_blank" rel="noopener">高德 →</a>' +
+        '<a class="nav-chip bmap" href="' + bmapUrl(b.mapQuery) + '" target="_blank" rel="noopener">百度 →</a>' +
+        '</span></div>'
+      ) : '';
       return '<div class="booking ' + (b.status === 'pending' ? 'pending' : '') + '">' +
         '<div class="booking-top"><span class="booking-type">' + b.type + '</span>' +
         '<span class="booking-status">' + (b.status === 'pending' ? '待确认' : '已确认') + '</span></div>' +
         '<div class="booking-title">' + b.title + '</div>' +
         '<div class="booking-detail">' + b.detail + '</div>' +
+        navHtml +
         '</div>';
     }).join('');
   }
