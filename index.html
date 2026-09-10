@@ -409,7 +409,7 @@
 
   var days = [
     {
-      id:1, dateLabel:'9月12日 · 周六', title:'Day 1 · 老城与租界', cls:'day1',
+      id:1, dateLabel:'9月12日 · 周六', title:'Day 1 · 老城与租界', cls:'day1', area:'天津古文化街',
       stops:[
         {time:'09:59', name:'抵达天津站', desc:'高铁 C2213,亦庄 09:30 出发,09:59 到站,历时29分。行李可先寄存站内。', tags:['到达'], mapQuery:'天津站', iso:'2026-09-12T09:59:00+08:00'},
         {time:'10:30', name:'意大利风情区', desc:'中国境内唯一的意大利租界旧址,红顶建筑、圆拱与雕塑成群,梁启超、曹禺等名人故居也在此。慢慢逛、拍照,大约1.5小时。', tags:['建筑','拍照'], mapQuery:'天津意式风情区', iso:'2026-09-12T10:30:00+08:00'},
@@ -421,7 +421,7 @@
       ]
     },
     {
-      id:2, dateLabel:'9月13日 · 周日', title:'Day 2 · 五大道与海河', cls:'day2',
+      id:2, dateLabel:'9月13日 · 周日', title:'Day 2 · 五大道与海河', cls:'day2', area:'天津五大道',
       stops:[
         {time:'09:30', name:'五大道', desc:'天津最大的租界建筑群,英式、法式、意式洋楼云集,张学良、顾维钧等名人旧居也在区内,适合骑行或坐观光马车游览。', tags:['建筑','骑行'], mapQuery:'天津五大道', iso:'2026-09-13T09:30:00+08:00'},
         {time:'11:30', name:'瓷房子', desc:'整栋老洋楼外立面用瓷片、瓷瓶装饰而成,是五大道一带很有话题性的一站。周末排队较久,建议提前在线买票。', tags:['拍照','需提前订票'], mapQuery:'天津瓷房子', iso:'2026-09-13T11:30:00+08:00'},
@@ -458,15 +458,11 @@
     '古文化街、南市食品街的老字号店铺高峰期容易排队,可以错峰前往。'
   ];
 
-  function mapsUrl(query){
-    return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(query + ', 天津') + '&travelmode=transit';
+  function amapUrl(query){
+    return 'https://uri.amap.com/search?keyword=' + encodeURIComponent(query) + '&city=' + encodeURIComponent('天津') + '&callnative=1&src=travel-itinerary';
   }
-  function mapsMultiUrl(stops){
-    var pts = stops.map(function(s){ return encodeURIComponent(s.mapQuery + ', 天津'); });
-    var origin = pts[0], destination = pts[pts.length-1], mids = pts.slice(1,-1);
-    var url = 'https://www.google.com/maps/dir/?api=1&origin=' + origin + '&destination=' + destination + '&travelmode=transit';
-    if (mids.length) url += '&waypoints=' + mids.join('|');
-    return url;
+  function amapAreaUrl(day){
+    return 'https://uri.amap.com/search?keyword=' + encodeURIComponent(day.area) + '&city=' + encodeURIComponent('天津') + '&view=list&callnative=1&src=travel-itinerary';
   }
 
   function miniMapSvg(day){
@@ -513,7 +509,7 @@
           '<div class="stop-row">' +
           '<div class="stop-time">' + s.time + '</div>' +
           '<div class="stop-body">' +
-          '<div class="stop-name-row"><span class="stop-name"><a href="' + mapsUrl(s.mapQuery) + '" target="_blank" rel="noopener">' + s.name + '</a></span></div>' +
+          '<div class="stop-name-row"><span class="stop-name"><a href="' + amapUrl(s.mapQuery) + '" target="_blank" rel="noopener">' + s.name + '</a></span></div>' +
           '<div class="stop-desc">' + s.desc + '</div>' +
           '<div class="stop-tags">' + tagsHtml + '</div>' +
           '</div></div></div>';
@@ -524,7 +520,7 @@
         '<div class="day-date">' + day.dateLabel + '</div>' +
         '<details class="day-map"><summary>展开当日路线地图</summary>' +
         '<div class="day-map-body">' + miniMapSvg(day) +
-        '<a class="nav-all-btn" href="' + mapsMultiUrl(day.stops) + '" target="_blank" rel="noopener">一键打开全天多点导航</a>' +
+        '<a class="nav-all-btn" href="' + amapAreaUrl(day) + '" target="_blank" rel="noopener">在高德地图中查看今日区域</a>' +
         '</div></details>' +
         '<div class="timeline">' + stopsHtml + '</div>' +
         '</div>';
